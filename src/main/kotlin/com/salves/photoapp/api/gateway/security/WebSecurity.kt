@@ -17,6 +17,8 @@ class WebSecurity(private val env : Environment) : WebSecurityConfigurerAdapter(
         http.csrf().disable()
         http.headers().frameOptions().disable()
         http.authorizeRequests()
+                .antMatchers(env.getProperty("api.users.actuator.url.path")).permitAll()
+                .antMatchers(env.getProperty("api.zuul.actuator.url.path")).permitAll()
                 .antMatchers(POST, env.getProperty("api.registration.url.path")).permitAll()
                 .antMatchers(POST, env.getProperty("api.login.url.path")).permitAll()
                 .anyRequest().authenticated()
